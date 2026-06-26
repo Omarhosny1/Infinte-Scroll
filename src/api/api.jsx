@@ -1,5 +1,3 @@
-const dataUrl = new URL("../../Users/users.json", import.meta.url);
-
 const getLocalPosts = (usersData) => {
   if (Array.isArray(usersData)) {
     return usersData;
@@ -21,7 +19,7 @@ const getLocalPosts = (usersData) => {
 };
 
 export const getPostsPage = async (pageParam = 1) => {
-  const response = await fetch(dataUrl);
+  const response = await fetch("/Users/users.json");
   if (!response.ok) {
     throw new Error("Failed to load users data");
   }

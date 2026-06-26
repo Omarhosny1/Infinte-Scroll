@@ -10,11 +10,15 @@ const Users = () => {
     (post) => {
       if (loading) return;
       if (intObserver.current) intObserver.current.disconnect();
-      intObserver.current = new IntersectionObserver((posts) => {
-        if (posts[0].isIntersecting && hasNextPage) {
-          setPageNum((prev) => prev + 1);
-        }
-      });
+      intObserver.current = new IntersectionObserver(
+        (posts) => {
+          const firstEntry = posts[0];
+          if (firstEntry?.isIntersecting && hasNextPage && !loading) {
+            setPageNum((prev) => prev + 1);
+          }
+        },
+        { rootMargin: "200px 0px", threshold: 0.1 },
+      );
       if (post) intObserver.current.observe(post);
     },
     [loading, hasNextPage],
